@@ -1,0 +1,28 @@
+
+
+services:
+#Node.js Application
+  node.js_app:
+    build: ./node.js_app
+    container_name: node.js_app
+    ports:
+      - "80:3000"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: password123
+      DB_NAME: mydatabase
+    depends_on:
+      - mysql
+#MySQL container
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
